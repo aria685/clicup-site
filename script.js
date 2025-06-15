@@ -483,18 +483,16 @@ gsap.from("#footer", {
 // Affichage du bouton si scroll vers le bas
 window.addEventListener("scroll", () => {
   const btn = document.getElementById("scrollToFooter");
-  if (window.scrollY > 400) {
+  const scrollY = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+
+  const isAtBottom = scrollY + windowHeight >= documentHeight - 50; // marge pour tolérance
+
+  if (scrollY > 400 && !isAtBottom) {
     btn.classList.remove("hidden");
   } else {
     btn.classList.add("hidden");
-  }
-});
-
-// Scroll fluide vers le footer
-document.getElementById("scrollToFooter").addEventListener("click", () => {
-  const footer = document.getElementById("footer");
-  if (footer) {
-    footer.scrollIntoView({ behavior: "smooth" });
   }
 });
 
@@ -509,3 +507,33 @@ gsap.from("#scrollToFooter", {
     start: "top bottom"
   }
 });
+
+// section résultat
+
+  const voirBtns = document.querySelectorAll('.voir-resultat-btn');
+  const modale = document.getElementById('modalImage');
+  const modalImg = document.getElementById('modalImgContent');
+  const closeModal = document.getElementById('closeModal');
+
+  voirBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const imgSrc = btn.getAttribute('data-img');
+      modalImg.src = imgSrc;
+      modale.classList.remove('hidden');
+    });
+  });
+
+  closeModal.addEventListener('click', () => {
+    modale.classList.add('hidden');
+    modalImg.src = "";
+  });
+
+  // Fermer le modal quand on clique à l’extérieur de l’image
+  modale.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modale.classList.add('hidden');
+      modalImg.src = "";
+    }
+  });
+
+
