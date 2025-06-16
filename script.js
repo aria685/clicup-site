@@ -481,21 +481,31 @@ gsap.from("#footer", {
 
 
 // Affichage du bouton si scroll vers le bas
+// Scroll vers le bas au clic
+document.getElementById("scrollToFooter").addEventListener("click", () => {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth"
+  });
+});
+
+// Affichage intelligent du bouton
 window.addEventListener("scroll", () => {
   const btn = document.getElementById("scrollToFooter");
   const scrollY = window.scrollY;
   const windowHeight = window.innerHeight;
   const documentHeight = document.documentElement.scrollHeight;
 
-  const isAtBottom = scrollY + windowHeight >= documentHeight - 50; // marge pour tolérance
+  const isAtBottom = scrollY + windowHeight >= documentHeight - 100;
 
-  if (scrollY > 400 && !isAtBottom) {
+  if (!isAtBottom) {
     btn.classList.remove("hidden");
   } else {
     btn.classList.add("hidden");
   }
 });
 
+// Animation GSAP si tu veux garder
 gsap.from("#scrollToFooter", {
   scale: 0,
   opacity: 0,
@@ -507,6 +517,7 @@ gsap.from("#scrollToFooter", {
     start: "top bottom"
   }
 });
+
 
 // section résultat
 
